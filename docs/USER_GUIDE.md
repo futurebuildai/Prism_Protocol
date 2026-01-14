@@ -29,6 +29,7 @@ Say to the agent:
 | **Requirements** | `PROJECT_SCOPE.txt` | Are NFRs (scale, security) captured? |
 | **Planning** | `sprints/SPRINT-N.txt` | Does sequencing make sense? |
 | **Each Sprint** | `sprints/SPRINT-N-README.md` | Is the output complete? Tests passing? |
+| **Each Sprint** | Code + Docs | Does it meet `docs/DOCUMENTATION_STANDARDS.md`? |
 
 ---
 
