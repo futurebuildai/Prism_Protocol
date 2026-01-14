@@ -6,8 +6,23 @@ This guide is for **Product Managers and Project Managers** who will operate thi
 
 ## Quick Start
 
-### Starting a New Project
-Say to the agent:
+### 🛑 STOP! Read This First.
+**Do not** just start giving commands to the agents.
+
+**Step 0: The Initiation**
+1.  Open the **Gemini App**.
+2.  Start a chat with **"The Antigravity Guide"** (your Meta-Agent Gem).
+3.  Say: **"I am ready to start a new project."**
+
+This Gem is your **Project Onboarding Specialist**. It will:
+1.  Walk you through configuring this Spec Kit.
+2.  Interview you to generate a robust `PROJECT_SCOPE.txt`.
+3.  Tell you exactly what command to copy-paste here to start the local agents.
+
+---
+
+### Step 1: Execution (After Onboarding)
+Once the Antigravity Guide gives you the green light, paste its generated command here:
 > "Run the full development cycle to build [Your Idea]."
 
 **Be prepared to answer:**
