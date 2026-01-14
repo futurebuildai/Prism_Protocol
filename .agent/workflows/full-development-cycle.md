@@ -10,6 +10,18 @@ This workflow orchestrates the entire software development lifecycle using the s
 - Ensure the project workspace is set up.
 - Have a clear, high-level description of what you want to build.
 
+## Context Management (Avoiding Token Bloat)
+After each major phase, create a summary to compress context:
+1.  **After Requirements**: Summarize key decisions into the top of `PROJECT_SCOPE.txt`.
+2.  **After Planning**: Note total sprints and dependencies in a `PLANNING_SUMMARY.md`.
+3.  **After Each Sprint**: The `SPRINT-N-README.md` serves as the summary for subsequent sprints.
+
+For very long projects, advise the user to **start a new Antigravity thread** for each phase, loading only the relevant artifacts.
+
+## Model Recommendations
+*   **Gemini 3 Pro / Opus 4.5**: Requirement Gathering, Product Owner Reviews.
+*   **Gemini 3 Flash**: Planning, Code Generation, Testing.
+
 ## Steps
 
 ### Phase 1: Requirement Gathering
