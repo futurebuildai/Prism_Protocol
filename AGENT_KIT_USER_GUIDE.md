@@ -1,6 +1,6 @@
 # Agent Kit User Guide: Playbooks for the Autonomous Org
 
-This guide explains how to drive the **FutureBuild Studio** organization to achieve L7-quality results in various scenarios.
+This guide explains how to drive the **Antigravity Prism** organization to achieve L7-quality results in various scenarios.
 
 ---
 
@@ -67,6 +67,18 @@ This guide explains how to drive the **FutureBuild Studio** organization to achi
 2.  **Bridge Building (Dev)**:
     *   Command: *"Use the **DevTeam** skill. Implement the Stripe wrapper."*
     *   *Result*: `Integration Engineer` builds the Anti-Corruption Layer (Adapter) so core code doesn't depend on Stripe explicitly.
+
+---
+
+## 🧰 Scenario 6: Automating Workflows (Meta-Engineering)
+**Goal**: "We deploy to staging manually 5 times a day. Automate it."
+
+1.  **Codify (Kit)**:
+    *   Command: *"Use the **/kit** command. Create a reusable workflow for 'Deploy to Staging'."*
+    *   *Result*: Kit Expert creates `.agent/workflows/deploy-staging.md` steps.
+2.  **Usage**:
+    *   Command: *"Use the Kit Expert to run the Deploy to Staging workflow."*
+    *   *Result*: The agent executes the new standard procedure.
 
 ---
 
