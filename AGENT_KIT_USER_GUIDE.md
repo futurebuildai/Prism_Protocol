@@ -1,109 +1,303 @@
-# Agent Kit User Guide: Playbooks for the Autonomous Org
+# Antigravity Prism Protocol: User Guide
 
-This guide explains how to drive the **Antigravity Prism** organization to achieve L7-quality results in various scenarios.
-
----
-
-## 🟢 Scenario 1: Greenfield Project (Start from Scratch)
-**Goal**: Build a new product (e.g., "A Crypto Trading Bot") from zero.
-
-1.  **Vision (Product)**:
-    *   Command: *"Use the **Product** skill to discover and plan a new Crypto Trading Bot."*
-    *   *Result*: Agent creates `planning/ROADMAP.md` and a high-level `PRODUCT_SPEC.md` for the MVP.
-2.  **Architecture (Dev)**:
-    *   Command: *"Use the **DevTeam** skill to create the Architecture for the Crypto Bot MVP based on the PRD."*
-    *   *Result*: Agent (Architect) creates `TECH_DESIGN_SPEC.md` (C4 diagrams, Stack selection).
-3.  **Bootstrapping (Dev)**:
-    *   Command: *"Use the **DevTeam** skill to scaffold the repo."*
-    *   *Result*: `npx create-app`, folder structure, CI/CD setup.
+This guide explains how to use the **Antigravity Prism Protocol** to achieve L7-quality results using the hybrid workflow between **Antigravity** (Claude.ai) and **Claude Code** (terminal).
 
 ---
 
-## ✨ Scenario 2: New Feature (The "Happy Path")
-**Goal**: Add "Social Login" to the existing app.
+## The Inter-Thread Protocol
 
-1.  **Spec (Product)**:
-    *   Command: *"Use the **Product** skill. I want to add Google/GitHub login. Create a Spec."*
-    *   *Result*: Agent updates `BACKLOG.md` and generates `specs/templates/PRODUCT_SPEC.md` (Auth flows, DB changes).
-2.  **Plan (Dev)**:
-    *   Command: *"Use the **DevTeam** skill. Plan the implementation of Social Login from the Backlog."*
-    *   *Result*: Agent creates `TECH_DESIGN_SPEC.md` (OAuth flow, Security Threat Model).
-3.  **Build (Dev)**:
-    *   Command: *"Use the **DevTeam** skill. Execute the Social Login spec."*
-    *   *Result*: Code is written, tests are passed, `SPRINT_BOARD.md` is updated.
+Every task flows through three threads with explicit handoffs:
 
----
-
-## 🐛 Scenario 3: Bug Fixing (Reactive)
-**Goal**: "The checkout page is crashing on mobile."
-
-1.  **Triage (Ops)**:
-    *   Command: *"Use the **Ops** skill. Users are reporting crashes on checkout mobile."*
-    *   *Result*: `Support Engineer` tries to reproduce. Creates an `ADHOC_Request_SPEC.md` with repro steps.
-2.  **Fix (Dev)**:
-    *   Command: *"Use the **DevTeam** skill to fix the checkout crash bug (See AdHoc Spec)."*
-    *   *Result*: Engineer fixes bug, adds regression test. Code Reviewer verifies.
-
----
-
-## 🔒 Scenario 4: Security Hardening (Proactive)
-**Goal**: Ensure we are safe for enterprise users.
-
-1.  **Audit (Ops)**:
-    *   Command: *"Use the **Ops** skill. Run a Security Audit on the auth module."*
-    *   *Result*: `Security Engineer` runs simple audit/simulations. Produces a Report.
-2.  **Harden (Ops/Dev)**:
-    *   Command: *"Use the **Ops** skill to patch the vulnerabilities found."*
-    *   *Result*: Secrets rotated, dependencies updated, headers fixed.
-
----
-
-## 🔌 Scenario 5: Third-Party Integration
-**Goal**: Integrate "Stripe" for payments.
-
-1.  **Feasibility (Product/Research)**:
-    *   Command: *"Use the **Product** skill. Investigate Stripe integration feasibility."*
-    *   *Result*: `Research Engineer` prototypes. `Integration Engineer` checks API docs.
-2.  **Bridge Building (Dev)**:
-    *   Command: *"Use the **DevTeam** skill. Implement the Stripe wrapper."*
-    *   *Result*: `Integration Engineer` builds the Anti-Corruption Layer (Adapter) so core code doesn't depend on Stripe explicitly.
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  /product                                                                │
+│  ─────────                                                              │
+│  Input: User request (idea, problem, goal)                              │
+│  Output: docs/[TASKNAME]_PRD.md                                         │
+│  Handoff: "Invoke /devteam [TASKNAME] to proceed."                      │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  /devteam [TASKNAME]                                                    │
+│  ───────────────────                                                    │
+│  Input: docs/[TASKNAME]_PRD.md                                          │
+│  Output: specs/[TASKNAME]_specs.md                                      │
+│  Handoff: "Invoke /software_engineer [TASKNAME] to proceed."            │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  /software_engineer [TASKNAME]                                          │
+│  ─────────────────────────────                                          │
+│  Input: specs/[TASKNAME]_specs.md                                       │
+│  L7 Gate: Pre-Mortem, Antagonist, Complexity                           │
+│  Output: TERMINAL PROMPT with Zero-Trust Review                         │
+│  Handoff: "Paste into Claude Code terminal."                            │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  Claude Code (Terminal)                                                  │
+│  ──────────────────────                                                 │
+│  Execute: claude -p "[TERMINAL PROMPT]"                                 │
+│  Output: Code changes, test results                                     │
+│  Return: Paste output back to Antigravity for Audit                     │
+└─────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 🧰 Scenario 6: Automating Workflows (Meta-Engineering)
-**Goal**: "We deploy to staging manually 5 times a day. Automate it."
+## Setup
 
-1.  **Codify (Kit)**:
-    *   Command: *"Use the **/kit** command. Create a reusable workflow for 'Deploy to Staging'."*
-    *   *Result*: Kit Expert creates `.agent/workflows/deploy-staging.md` steps.
-2.  **Usage**:
-    *   Command: *"Use the Kit Expert to run the Deploy to Staging workflow."*
-    *   *Result*: The agent executes the new standard procedure.
+### Prerequisites
 
----
+1. **Antigravity Account**: Access to Claude.ai with Projects enabled
+2. **Claude Code CLI**: Install via `npm install -g @anthropic-ai/claude-code`
+3. **Authentication**: Run `claude login` in your terminal
 
-## 🧠 Best Practices for the User (You)
-1.  **Trust the Contracts**: Don't skip the Spec. If you tell DevTeam to "just build it" without a Spec, they will REJECT it (L7 standard).
-2.  **Use the Planning Layer**: If you have 5 tasks, put them in the `BACKLOG.md` first. Don't spam commands.
-3.  **Respect the Handoff**: Let Product finish the PRD before waking up the Developers.
+### Project Configuration
+
+1. Add this repository to an Antigravity Project
+2. Ensure the `.agent/workflows/` directory is accessible
+3. Create a `CLAUDE.md` in your project root for Claude Code context
 
 ---
 
-## 🔧 Hybrid Mode: Antigravity + Claude Code
+## Scenario 1: New Feature (Complete Flow)
 
-This kit is optimized for a hybrid workflow where **Antigravity** manages state and **Claude Code** executes logic.
+**Goal**: Add JWT authentication to the API
 
-### Setup
-1. **Install Claude Code**: `npm install -g @anthropic-ai/claude-code`
-2. **Authenticate**: Run `claude login` in your terminal.
-3. **Configure Project**: Ensure a `CLAUDE.md` exists in your root (created by the `kit` workflow) to give Claude context on your tech stack.
+### Step 1: Product Phase
 
-### The Execution Loop
-1. **Plan (Antigravity)**: Ask the Manager Agent/DevTeam to "Prepare Step X". It will generate a **Context Prompt**.
-2. **Execute (Terminal)**: 
-   - Copy the Context Prompt.
-   - Run: `claude -p "[Paste Context Prompt]"`
-   - *Tip: Use `-p` for a single-shot execution or standard `claude` for interactive iterating.*
-3. **Audit (Antigravity)**: 
-   - Once Claude finishes, paste the terminal output (or a summary) back to Antigravity.
-   - Run `/CTO` to trigger the **Triple Review** before marking the step done.
+In Antigravity:
+```
+/product Add JWT authentication for the API
+```
+
+**Agent Response:**
+1. Establishes task name: `JWT_AUTH`
+2. Confirms: "This task will be tracked as `JWT_AUTH`. Confirm to proceed."
+3. Outputs Implementation Plan
+4. Creates `docs/JWT_AUTH_PRD.md`
+5. Handoff: "Invoke `/devteam JWT_AUTH` to proceed."
+
+### Step 2: DevTeam Phase
+
+In Antigravity:
+```
+/devteam JWT_AUTH
+```
+
+**Agent Response:**
+1. Validates `docs/JWT_AUTH_PRD.md` exists
+2. Assigns Architect and Security Engineer
+3. Creates `specs/JWT_AUTH_specs.md`
+4. Handoff: "Invoke `/software_engineer JWT_AUTH` to proceed."
+
+### Step 3: Software Engineer Phase
+
+In Antigravity:
+```
+/software_engineer JWT_AUTH
+```
+
+**Agent Response:**
+1. Runs L7 Spec Review Gate:
+   - Pre-Mortem: Checks for failure scenarios
+   - Antagonist: Checks for security vulnerabilities
+   - Complexity: Validates simplicity
+2. Generates TERMINAL PROMPT with:
+   - Objective and constraints
+   - Implementation steps
+   - L7 recursive audit instructions
+   - Verification commands
+   - Zero-Trust pre-commit checklist
+
+### Step 4: Execute in Terminal
+
+Copy the TERMINAL PROMPT and run:
+```bash
+claude -p "## Task: JWT_AUTH - Implement JWT middleware
+
+### Objective
+Implement JWT authentication middleware for the API...
+
+### L7 Recursive Audit Instructions
+For EACH sub-task, you MUST:
+1. Pre-Mortem: Before writing code, ask 'What could cause this to fail?'
+2. Antagonist: Before committing, ask 'How could this be exploited?'
+3. Complexity: After implementation, ask 'Is this the simplest solution?'
+
+### Zero-Trust Antagonistic Review (Pre-Commit Gate)
+STOP. Before committing, verify:
+- [ ] No secrets in code
+- [ ] All inputs validated
+..."
+```
+
+### Step 5: Audit Phase
+
+Paste the terminal output back into Antigravity:
+```
+[Paste terminal output here]
+```
+
+**Agent Response:**
+- QA validates test results against acceptance criteria
+- Security reviews changes
+- On Pass: Updates ROADMAP.md, generates HANDOFF.md
+- On Fail: Generates Correction Prompt
+
+### Step 6: Finalize
+
+```
+/NEXT
+```
+
+Commits state and moves to next step.
+
+---
+
+## Scenario 2: Bug Fix (Expedited Flow)
+
+**Goal**: Fix checkout page crash on mobile
+
+### Quick Path (Ops → Dev)
+
+```
+/ops Users reporting checkout crash on mobile
+```
+
+Agent creates `ADHOC_JWT_AUTH_SPEC.md` with repro steps, then:
+
+```
+/devteam CHECKOUT_CRASH_FIX
+```
+
+Continue with normal flow from DevTeam phase.
+
+---
+
+## Scenario 3: Greenfield Project
+
+**Goal**: Build a new crypto trading bot from scratch
+
+### Phase 1: Vision
+```
+/product Design a crypto trading bot MVP
+```
+
+Creates `ROADMAP.md` and `docs/CRYPTO_BOT_PRD.md`
+
+### Phase 2: Architecture
+```
+/devteam CRYPTO_BOT
+```
+
+Creates `specs/CRYPTO_BOT_specs.md` with architecture, stack selection, C4 diagrams
+
+### Phase 3: Bootstrap
+```
+/software_engineer CRYPTO_BOT
+```
+
+Generates scaffolding TERMINAL PROMPT
+
+---
+
+## L7 Quality Gates Reference
+
+### L7 Spec Review Gate (Before Prompt Generation)
+
+| Check | Question | Action |
+|-------|----------|--------|
+| Pre-Mortem | "If this fails in production, what was the cause?" | Document failure scenarios as constraints |
+| Antagonist | "How would a malicious actor exploit this?" | Add security verification steps |
+| Complexity | "Is this over-engineered?" | Flag for simplification |
+
+### Zero-Trust Antagonistic Review (Before Commit)
+
+**Security Checklist:**
+- [ ] No secrets or credentials in code
+- [ ] No hardcoded URLs/IPs
+- [ ] All user inputs validated
+- [ ] Auth/authz checks present
+- [ ] Error messages don't leak info
+
+**Quality Checklist:**
+- [ ] All tests pass
+- [ ] No linter errors
+- [ ] No TODO/FIXME on critical paths
+
+**Architecture Checklist:**
+- [ ] Follows codebase patterns
+- [ ] No circular dependencies
+- [ ] No breaking API changes
+
+---
+
+## Best Practices
+
+### 1. Always Start with /product
+Even for "simple" tasks, establish the task name and PRD first. This ensures:
+- Consistent artifact naming
+- Proper handoff chain
+- L7 audit trail
+
+### 2. Trust the Handoffs
+When an agent says "Invoke `/devteam [TASKNAME]`", do exactly that. Don't skip phases or the validation will fail.
+
+### 3. Use the Task Name Consistently
+The `[TASKNAME]` (e.g., `JWT_AUTH`) is your tracking ID. Use it in:
+- All thread invocations
+- Commit messages
+- Documentation references
+
+### 4. Don't Skip the Zero-Trust Review
+Before any commit, the checklist exists for a reason. If you find yourself wanting to skip it, that's a signal something is wrong.
+
+### 5. Paste Full Terminal Output
+When returning to Antigravity for the Audit phase, paste the complete terminal output. The QA and Security agents need full context.
+
+---
+
+## Command Reference
+
+| Command | Description | Input Required |
+|---------|-------------|----------------|
+| `/product [description]` | Start new task, create PRD | Task description |
+| `/devteam [TASKNAME]` | Create technical specs | Task name from /product |
+| `/software_engineer [TASKNAME]` | Generate terminal prompt | Task name from /devteam |
+| `/ops [description]` | Handle incidents, bugs | Issue description |
+| `/NEXT` | Finalize and proceed | After successful audit |
+| `/kit` | Meta-engineering, workflows | Workflow description |
+
+---
+
+## Troubleshooting
+
+### "Cannot proceed. Required input not found."
+
+The artifact from the previous phase doesn't exist. Go back to the previous phase:
+- Missing PRD → Run `/product` first
+- Missing specs → Run `/devteam [TASKNAME]` first
+
+### "Task name not provided"
+
+Include the `[TASKNAME]` in your command:
+- Wrong: `/devteam`
+- Right: `/devteam JWT_AUTH`
+
+### Claude Code Not Executing
+
+1. Verify Claude Code is installed: `claude --version`
+2. Verify authentication: `claude login`
+3. Try interactive mode: `claude` (without `-p`)
+
+### L7 Gate Failure
+
+If the Software Engineer returns a FAIL status:
+1. Note the specific gaps identified
+2. Return to `/devteam [TASKNAME]` to address them
+3. Re-run `/software_engineer [TASKNAME]`
