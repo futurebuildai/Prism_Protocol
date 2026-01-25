@@ -86,3 +86,24 @@ This guide explains how to drive the **Antigravity Prism** organization to achie
 1.  **Trust the Contracts**: Don't skip the Spec. If you tell DevTeam to "just build it" without a Spec, they will REJECT it (L7 standard).
 2.  **Use the Planning Layer**: If you have 5 tasks, put them in the `BACKLOG.md` first. Don't spam commands.
 3.  **Respect the Handoff**: Let Product finish the PRD before waking up the Developers.
+
+---
+
+## 🔧 Hybrid Mode: Antigravity + Claude Code
+
+This kit is optimized for a hybrid workflow where **Antigravity** manages state and **Claude Code** executes logic.
+
+### Setup
+1. **Install Claude Code**: `npm install -g @anthropic-ai/claude-code`
+2. **Authenticate**: Run `claude login` in your terminal.
+3. **Configure Project**: Ensure a `CLAUDE.md` exists in your root (created by the `kit` workflow) to give Claude context on your tech stack.
+
+### The Execution Loop
+1. **Plan (Antigravity)**: Ask the Manager Agent/DevTeam to "Prepare Step X". It will generate a **Context Prompt**.
+2. **Execute (Terminal)**: 
+   - Copy the Context Prompt.
+   - Run: `claude -p "[Paste Context Prompt]"`
+   - *Tip: Use `-p` for a single-shot execution or standard `claude` for interactive iterating.*
+3. **Audit (Antigravity)**: 
+   - Once Claude finishes, paste the terminal output (or a summary) back to Antigravity.
+   - Run `/CTO` to trigger the **Triple Review** before marking the step done.

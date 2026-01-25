@@ -2,6 +2,8 @@
 
 Welcome to **Antigravity Prism**. This repository is structured as a **Google L7-Quality Autonomous Organization**. It is not just a collection of code; it is a system of "Brains", "Contracts", and "Planning" that allows AI Agents to function as a mature engineering team.
 
+🚀 **Hybrid Workflow Ready**: Native support for **Claude Code** terminal execution with Antigravity planning.
+
 ## 🧠 The Three Brains (Entry Points)
 Instead of one generic assistant, this project has three specialized departments. **Always start your request with one of these skills:**
 
